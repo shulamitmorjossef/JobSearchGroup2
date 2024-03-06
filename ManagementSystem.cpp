@@ -18,9 +18,6 @@ ManagementSystem:: ManagementSystem(){
     getID();
     getEmp();
     getCan();
-    for (int i = 0; i < numOfCan; ++i) {
-        candidates[i].printProfile();
-    }
 }
 
 ManagementSystem:: ~ManagementSystem(){
