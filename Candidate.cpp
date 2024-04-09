@@ -76,6 +76,7 @@ Candidate::Candidate(char* id, char* password, int forgetPassQ, char* forgetPass
 }
 
 Candidate::Candidate(const Candidate& candidate){
+
     this-> id = new char [strlen(candidate.id)+1];
     strcpy(this->id, candidate.id);
 
@@ -108,76 +109,96 @@ Candidate::Candidate(const Candidate& candidate){
     this-> about = new char [strlen(candidate.about)+1];
     strcpy(this->about, candidate.about);
 
-    isCv = candidate.isCv;
+    this->isCv = candidate.isCv;
 
-    this-> CV = new char [strlen(candidate.CV)+1];
-    strcpy(this->CV, candidate.CV);
+    if (this->isCv) {
+
+        this->CV = new char[strlen(candidate.CV) + 1];
+        strcpy(this->CV, candidate.CV);
+
+    } else
+        this->CV = NULL;
 
     this-> age = age;
 
     this->numOfSub = candidate.numOfSub;
 
-    this->submissions = new Apply[numOfSub];
-    for (int i = 0; i < numOfSub; ++i){
-        this->submissions[i] = candidate.submissions[i];
-    }
-
+    if (this->numOfSub > 0) {
+        this->submissions = new Apply[candidate.numOfSub];
+        for (int i = 0; i < numOfSub; ++i) {
+            this->submissions[i] = candidate.submissions[i];
+        }
+    } else
+        this->submissions = NULL;
 }
 
 Candidate& Candidate::operator=(const Candidate &candidate) {
+
     delete [] id;
     this-> id = new char [strlen(candidate.id)+1];
     strcpy(this->id, candidate.id);
+
     delete[] password;
     this-> password = new char [strlen(candidate.password)+1];
     strcpy(this->password, candidate.password);
 
     this-> forgetPassQ = candidate.forgetPassQ;
+
     delete[] forgetPassA;
     this-> forgetPassA = new char [strlen(candidate.forgetPassA)+1];
     strcpy(this->forgetPassA, candidate.forgetPassA);
+
     delete[] fName;
     this-> fName = new char [strlen(candidate.fName)+1];
     strcpy(this->fName, candidate.fName);
+
     delete[] lName;
     this-> lName = new char [strlen(candidate.lName)+1];
     strcpy(this->lName, candidate.lName);
+
     delete[] email;
     this-> email = new char [strlen(candidate.email)+1];
     strcpy(this->email, candidate.email);
+
     delete[] phone;
     this-> phone = new char [strlen(candidate.phone)+1];
     strcpy(this->phone, candidate.phone);
+
     delete[] address;
     this-> address = new char [strlen(candidate.address)+1];
     strcpy(this->address, candidate.address);
+
     delete[] profession;
     this-> profession = new char [strlen(candidate.profession)+1];
     strcpy(this->profession, candidate.profession);
+
     delete[] about;
     this-> about = new char [strlen(candidate.about)+1];
     strcpy(this->about, candidate.about);
-    if(candidate.isCv) {
-        if(this->isCv)
-            delete[] CV;
-        this->isCv = candidate.isCv;
-        this->CV = new char[strlen(candidate.CV) + 1];
-        strcpy(this->CV, candidate.CV);
-    } else{
-        if(this->isCv) {
-            delete[] CV;
-            this->CV = NULL;
-            this->isCv = false;
-        }
-    }
+
     this-> age = candidate.age;
 
-    this->numOfSub = candidate.numOfSub;
-    delete[] submissions;
-    this->submissions = new Apply[numOfSub];
-    for (int i = 0; i < numOfSub; ++i){
-        this->submissions[i] = candidate.submissions[i];
+    delete [] CV;
+
+    this->isCv = candidate.isCv;
+
+    if(candidate.isCv) {
+        this->CV = new char[strlen(candidate.CV) + 1];
+        strcpy(this->CV, candidate.CV);
     }
+    else
+        this->CV = NULL;
+
+    this->numOfSub = candidate.numOfSub;
+    delete [] submissions;
+    if(numOfSub > 0) {
+        this->submissions = new Apply[numOfSub];
+        for (int i = 0; i < numOfSub; ++i) {
+            this->submissions[i] = candidate.submissions[i];
+        }
+    }
+    else
+        this->submissions = NULL;
 }
 
 Candidate::~Candidate(){
@@ -337,10 +358,7 @@ void Candidate::addApply(int id) {
     submissions=tmp;
     submissions[numOfSub]=a1;
     numOfSub++;
-    for (int i = 0; i <2 ; ++i) {
-        cout<<"The Apply "<<i+1<<" is : \n";
-        submissions[i].print();
-    }
+
 }
 
 int Candidate::deleteApply(int index){

@@ -17,13 +17,13 @@ Job::Job(){
     address = NULL;
     salary = NULL;
     about = NULL;
-    jobType = 1;
-    jobHours = 1;
-    experience = 1;
-    jobArea = 1;
-    age = 1;
-    jobFor = 1;
-    jobRange = 1;
+    jobType = 0;
+    jobHours = 0;
+    experience = 0;
+    jobArea = 0;
+    age = 0;
+    jobFor = 0;
+    jobRange = 0;
 //    for (int i = 0; i < numOfSub; ++i) {
 //        idOfSub[i] = NULL;
 //    }
@@ -35,27 +35,18 @@ Job::Job(){
 Job:: Job(int id, char* businessName, char* jobProfession, char* address,  char* salary, char* about,
           int jobType, int jobHours, int experience, int jobArea, int age, int jobFor, int jobRange){
 
-    this->idOfSub = nullptr;
+    this->idOfSub = NULL;
+
     this->id = id;
+
     this-> businessName = new char [strlen(businessName)+1];
     strcpy(this->businessName, businessName);
-
-    this-> jobType = jobType;
-    this-> jobHours = jobHours;
 
     this-> jobProfession = new char [strlen(jobProfession)+1];
     strcpy(this->jobProfession, jobProfession);
 
-    this-> experience = experience;
-
-    this-> jobArea = jobArea;
-
-    this-> jobFor = jobFor;
-
     this-> address = new char [strlen(address)+1];
     strcpy(this->address, address);
-
-    this-> jobRange = jobRange;
 
     this->salary = new char [strlen(salary)+1];
     strcpy(this->salary,salary);
@@ -63,7 +54,19 @@ Job:: Job(int id, char* businessName, char* jobProfession, char* address,  char*
     this-> about = new char [strlen(about)+1];
     strcpy(this->about, about);
 
+    this-> jobType = jobType;
+
+    this-> jobHours = jobHours;
+
+    this-> experience = experience;
+
     this-> age = age;
+
+    this-> jobArea = jobArea;
+
+    this-> jobFor = jobFor;
+
+    this-> jobRange = jobRange;
 
     this->status = true;
 
@@ -71,28 +74,17 @@ Job:: Job(int id, char* businessName, char* jobProfession, char* address,  char*
 }
 
 Job:: Job( const Job& job){
+
     this->id = job.id;
 
     this-> businessName = new char [strlen(job.businessName)+1];
     strcpy(this->businessName, job.businessName);
 
-    this-> jobType = job.jobType;
-
-    this-> jobHours = job.jobHours;
-
     this-> jobProfession = new char [strlen(job.jobProfession)+1];
     strcpy(this->jobProfession, job.jobProfession);
 
-    this-> experience = job.experience;
-
-    this-> jobArea = job.jobArea;
-
-    this-> jobFor = job.jobFor;
-
     this-> address = new char [strlen(job.address)+1];
     strcpy(this->address, job.address);
-
-    this-> jobRange = job.jobRange;
 
     this->salary = new char [strlen(job.salary)+1];
     strcpy(this->salary,job.salary);
@@ -100,73 +92,83 @@ Job:: Job( const Job& job){
     this-> about = new char [strlen(job.about)+1];
     strcpy(this->about, job.about);
 
+    this-> jobType = job.jobType;
+
+    this-> jobHours = job.jobHours;
+
+    this-> experience = job.experience;
+
     this-> age = job.age;
+
+    this-> jobArea = job.jobArea;
+
+    this-> jobFor = job.jobFor;
+
+    this-> jobRange = job.jobRange;
 
     this->status = job.status;
 
     this->numOfSub = job.numOfSub;
 
-    this->idOfSub = new char* [numOfSub];
-    for(int i = 0; i< numOfSub; ++i)
-    {
-        strcpy(this->idOfSub[i], job.idOfSub[i]);
-    }
+    if (job.numOfSub != 0) {
 
+        this->idOfSub = new char *[numOfSub];
+        for (int i = 0; i < numOfSub; ++i) {
+            this->idOfSub[i] = new char[strlen(job.idOfSub[i] + 1)];
+            strcpy(this->idOfSub[i], job.idOfSub[i]);
+        }
+    } else
+        this->idOfSub = NULL;
 }
 
 Job& Job:: operator= (const Job& job){
+
     this->id = job.id;
 
-    if(businessName != nullptr)
-        delete [] businessName;
+    delete [] businessName;
     this-> businessName = new char [strlen(job.businessName)+1];
     strcpy(this->businessName, job.businessName);
+
+    delete [] jobProfession;
+    this-> jobProfession = new char [strlen(job.jobProfession)+1];
+    strcpy(this->jobProfession, job.jobProfession);
+
+    delete [] address;
+    this-> address = new char [strlen(job.address)+1];
+    strcpy(this->address, job.address);
+
+    delete [] salary;
+    this->salary = new char [strlen(job.salary)+1];
+    strcpy(this->salary,job.salary);
+
+    delete [] about;
+    this-> about = new char [strlen(job.about)+1];
+    strcpy(this->about, job.about);
 
     this-> jobType = job.jobType;
 
     this-> jobHours = job.jobHours;
 
-    if(jobProfession != nullptr)
-        delete [] jobProfession;
-    this-> jobProfession = new char [strlen(job.jobProfession)+1];
-    strcpy(this->jobProfession, job.jobProfession);
-
     this-> experience = job.experience;
+
+    this-> age = job.age;
 
     this-> jobArea = job.jobArea;
 
     this-> jobFor = job.jobFor;
 
-    if(address != nullptr)
-        delete [] address;
-    this-> address = new char [strlen(job.address)+1];
-    strcpy(this->address, job.address);
-
     this-> jobRange = job.jobRange;
-
-    if(salary != nullptr)
-        delete [] salary;
-    this->salary = new char [strlen(job.salary)+1];
-    strcpy(this->salary,job.salary);
-
-
-    if(about != nullptr)
-        delete [] about;
-    this-> about = new char [strlen(job.about)+1];
-    strcpy(this->about, job.about);
-
-    this-> age = job.age;
 
     this->status = job.status;
 
-    this->numOfSub = job.numOfSub;
+    for (int i = 0; i < this->numOfSub; ++i)
+        delete [] this->idOfSub[i];
 
-    for (int i = 0; i < this->numOfSub; ++i) {
-        delete[] this->idOfSub[i];
-    }
     delete[] this->idOfSub;
 
-    this->idOfSub = new char*[this->numOfSub];
+    this->numOfSub = job.numOfSub;
+
+    this->idOfSub = new char* [this->numOfSub];
     for (int i = 0; i < this->numOfSub; ++i) {
         this->idOfSub[i] = new char[strlen(job.idOfSub[i]) + 1];
         strcpy(this->idOfSub[i], job.idOfSub[i]);
@@ -181,6 +183,10 @@ Job:: ~Job(){
     delete [] address;
     delete [] salary;
     delete [] about;
+    for (int i = 0; i < numOfSub; ++i) {
+        delete [] idOfSub[i];
+    }
+    delete [] idOfSub;
 }
 
 void Job::updateJob(){

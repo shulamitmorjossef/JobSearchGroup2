@@ -10,12 +10,12 @@
 using namespace std;
 
 Employer:: Employer(){
-    this->id = nullptr;
-    this->password = nullptr;
+    this->id = NULL;
+    this->password = NULL;
     this->forgetPassQ = 0;
-    this->forgetPassA = nullptr;
+    this->forgetPassA = NULL;
     this->jobsNum = 0;
-    this->jobs = nullptr;
+    this->jobs = NULL;
 
 }
 
@@ -32,20 +32,23 @@ Employer::Employer(char *id, char *password, int forgetPassQ, char* forgetPassA)
     this-> forgetPassA = new char [strlen(forgetPassA)+1];
     strcpy(this->forgetPassA, forgetPassA);
 
-    this->jobs = nullptr;
+    this->jobs = NULL;
     this-> jobsNum = 0;
 
 }
 
 Employer &Employer::operator=(const Employer &employer) {
+
     delete [] id;
     this-> id = new char [strlen(employer.id)+1];
     strcpy(this->id, employer.id);
+
     delete [] password;
     this-> password = new char [strlen(employer.password)+1];
     strcpy(this->password, employer.password);
 
     this-> forgetPassQ = employer.forgetPassQ;
+
     delete [] forgetPassA;
     this-> forgetPassA = new char [strlen(employer.forgetPassA)+1];
     strcpy(this->forgetPassA, employer.forgetPassA);
