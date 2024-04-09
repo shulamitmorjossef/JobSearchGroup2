@@ -990,7 +990,7 @@ void ManagementSystem:: mainEmp(Employer& employer) {
                         employer.jobs[index].printSubPro(candidates, numOfCan);
 
                         while (prof < 0 || prof > employer.jobs[index].numOfSub) {
-                            cout << "Enter number of profile to reject his request\nExit (0)";
+                            cout << "Enter number of profile to reject his request\nExit (0)\n";
                             if (!(cin >> prof)) {
                                 cin.clear();
                                 cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

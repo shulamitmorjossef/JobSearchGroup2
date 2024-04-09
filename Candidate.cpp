@@ -411,4 +411,6 @@ void Candidate::setCv(char *cv) {
     delete [] CV;
     CV = new char [strlen(cv)+1];
     strcpy(this->CV, cv);
+    if (strcmp(CV, "-") != 0)
+        this->isCv = true;
 }
