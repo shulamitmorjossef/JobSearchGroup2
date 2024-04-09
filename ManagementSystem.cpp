@@ -669,12 +669,10 @@ void ManagementSystem:: signUpCan(){
     }
     cout << "Your age:" <<endl;
     cin>>age;
-    while (age< 0 || age>200 || cin.fail()) {
-        if (cin.fail()) {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        }
+    while (age < 13 || age > 200 ) {
         cout << "Try again, Your age:" <<endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin >> age;
     }
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -931,7 +929,7 @@ void ManagementSystem:: mainEmp(Employer& employer) {
                 index--;
                 choice = 4;
                 cout << "Delete job (1)\nUpdate job (2)\nSee candidate's profiles (3)\nExit (0)\n";
-                while (!(cin >> choice) || (choice != 1 && choice != 2 && choice != 3 && choice != 0) || cin.peek() != '\n') {
+                while (!(cin >> choice) || (choice != 1 && choice != 2 && choice != 3 && choice != 0)) {
                     cout << "Delete job (1)\nUpdate job (2)\nSee candidate's profiles (3)\nExit (0)\n";
                     cin.clear();
                     cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -942,11 +940,13 @@ void ManagementSystem:: mainEmp(Employer& employer) {
                     return;
                 }
                 if (choice == 1) {
-                    while (!(cin >> choice) || (choose != 1 && choose != 2 && choose != 0) || cin.peek() != '\n') {
+                    while (choose != 1 && choose != 2 && choose != 0) {
                         cout << "Do you want to delete the job permanently (1) or temporarily (2)?\nExit (0)\n";
-                        cin.clear();
-                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                        choose = -3;
+                        if(!(cin >> choose)) {
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            choose = -3;
+                        }
                     }
                     if (choose == 0) {
                         mainEmp(employer);
@@ -972,12 +972,15 @@ void ManagementSystem:: mainEmp(Employer& employer) {
                             cout<<"The job was deleted\n-------------------------------------------------------------------------------------------------------------\n";
 
                         } else
-                            cout << "The job was not deleted\n";
+                            cout << "The job was not deleted\n-------------------------------------------------------------------------------------------------------------\n";
                         mainEmp(employer);
                         return;
-                    } else if (choose == 2)
+                    } else if (choose == 2) {
                         employer.jobs[index].setStatus(false);
-                } else if (choice == 2) {
+                        cout
+                                << "The job has been temporarily deleted and is not available for viewing by applicants, this can be changed by updating the job\n-------------------------------------------------------------------------------------------------------------\n";
+                    }
+                    } else if (choice == 2) {
                     employer.jobs[index].updateJob();
                     mainEmp(employer);
                     return;

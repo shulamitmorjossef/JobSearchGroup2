@@ -95,7 +95,7 @@ Employer::~Employer(){
 
 void Employer:: printJobs(){
     if(this->jobsNum == 0)
-        cout << "No jobs have been posted yet\n";
+        cout << "No jobs have been posted yet\n-------------------------------------------------------------------------------------------------------------\n";
     else
         for(int i = 0; i < jobsNum; ++i){
             cout << i+1 << ".\n";

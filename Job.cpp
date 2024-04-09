@@ -371,7 +371,12 @@ void Job::updateJob(){
         cout << "The job is not available, click 1 to post it again or enter to continue\n";
         getline(cin, newValue);
         if(!newValue.empty()) {
-            status = true;
+            if (newValue == "1") {
+                status = true;
+                cout << "The job status has been updated, the job is now available for candidate\n";
+            }
+            else{
+                cout << "Invalid input. The field remains the same"<< endl;}
         }
     }
     cout << "The job details have been successfully updated!\n";
